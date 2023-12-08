@@ -1,7 +1,6 @@
 package ru.sva.taskmanagementsystem.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.orm.hibernate5.SpringSessionContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -7,22 +7,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sva.taskmanagementsystem.dto.JwtRequest;
 import ru.sva.taskmanagementsystem.dto.RegistrationUserDto;
-import ru.sva.taskmanagementsystem.service.AuthService;
-import ru.sva.taskmanagementsystem.service.UserService;
+import ru.sva.taskmanagementsystem.service.AuthServiceImpl;
+import ru.sva.taskmanagementsystem.service.UserServiceImpl;
 
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
-    private final UserService userService;
-    private final AuthService authService;
+    private final UserServiceImpl userServiceImpl;
+    private final AuthServiceImpl authServiceImpl;
 
     @PostMapping("/authorization")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
-        return ResponseEntity.ok(authService.createAuthToken(authRequest));
+        return ResponseEntity.ok(authServiceImpl.createAuthToken(authRequest));
     }
 
     @PostMapping("/registration")
     public ResponseEntity<?> createUser(@RequestBody RegistrationUserDto registrationUserDto) {
-        return ResponseEntity.ok(userService.createUser(registrationUserDto));
+        return ResponseEntity.ok(userServiceImpl.createUser(registrationUserDto));
     }
 }
