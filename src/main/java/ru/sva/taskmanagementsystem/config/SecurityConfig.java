@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/secured").authenticated()
-                .antMatchers("/info").authenticated()
+                .antMatchers("/task").authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()

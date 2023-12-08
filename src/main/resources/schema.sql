@@ -27,8 +27,8 @@ CREATE TABLE IF NOT EXISTS tasks (
     status          VARCHAR(11) NOT NULL,
     priority        VARCHAR(50) NOT NULL,
     author_id       BIGINT NOT NULL,
-    executor_id     BIGINT NOT NULL,
-    comment_id      BIGINT NOT NULL,
+    executor_id     BIGINT,
+    comment_id      BIGINT,
     FOREIGN KEY (author_id)   REFERENCES users (id) ON DELETE CASCADE,
     FOREIGN KEY (executor_id) REFERENCES users (id) ON DELETE CASCADE,
     FOREIGN KEY (comment_id) REFERENCES comments (id) ON DELETE CASCADE

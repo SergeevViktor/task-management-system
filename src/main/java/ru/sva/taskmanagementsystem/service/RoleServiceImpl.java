@@ -10,6 +10,7 @@ import ru.sva.taskmanagementsystem.repository.RoleRepository;
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
 
+    @Override
     public Role findByName(String name) {
         return roleRepository.findByName(name);
     }

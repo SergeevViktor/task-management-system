@@ -19,10 +19,17 @@ public class UserServiceImpl implements UserService {
     private final RoleServiceImpl roleServiceImpl;
     private final PasswordEncoder passwordEncoder;
 
+    @Override
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
+    @Override
+    public Optional<User> findById(Long userId) {
+        return userRepository.findById(userId);
+    }
+
+    @Override
     public UserDto createUser(RegistrationUserDto registrationUserDto) {
         //TODO: добавить проверку на существование юзера
         if (!registrationUserDto.getPassword().equals(registrationUserDto.getConfirmPassword())) {
