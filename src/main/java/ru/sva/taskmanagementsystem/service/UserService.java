@@ -12,4 +12,6 @@ public interface UserService {
     Optional<User> findById(Long userId);
 
     UserDto createUser(RegistrationUserDto registrationUserDto);
+
+    UserDto getInfo(String username);
 }

@@ -2,19 +2,13 @@ package ru.sva.taskmanagementsystem.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sva.taskmanagementsystem.dto.TaskCreateDto;
-import ru.sva.taskmanagementsystem.dto.TaskDto;
-import ru.sva.taskmanagementsystem.dto.TaskUpdateExecutor;
-import ru.sva.taskmanagementsystem.dto.TaskUpdateStatus;
+import ru.sva.taskmanagementsystem.dto.*;
 import ru.sva.taskmanagementsystem.dto.mapper.TaskMapper;
 import ru.sva.taskmanagementsystem.exception.ConflictException;
 import ru.sva.taskmanagementsystem.exception.ForbiddenException;
 import ru.sva.taskmanagementsystem.exception.NotFoundException;
 import ru.sva.taskmanagementsystem.exception.ValidationException;
-import ru.sva.taskmanagementsystem.model.Priority;
-import ru.sva.taskmanagementsystem.model.Status;
-import ru.sva.taskmanagementsystem.model.Task;
-import ru.sva.taskmanagementsystem.model.User;
+import ru.sva.taskmanagementsystem.model.*;
 import ru.sva.taskmanagementsystem.repository.TaskRepository;
 
 import java.util.List;
@@ -27,6 +21,12 @@ import java.util.stream.Collectors;
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final UserServiceImpl userService;
+    private final CommentServiceImpl commentService;
+
+    @Override
+    public Task findById(Long taskId) {
+        return existTask(taskId);
+    }
 
     @Override
     public TaskDto createTask(String username, TaskCreateDto taskDto) {
@@ -39,7 +39,7 @@ public class TaskServiceImpl implements TaskService {
                 .status(Status.valueOf(taskDto.getStatus()))
                 .priority(Priority.valueOf(taskDto.getPriority()))
                 .author(user)
-                .executor(taskDto.getExecutor())
+                .executor(null)
                 .comments(null)
                 .build();
         taskRepository.save(task);
@@ -48,22 +48,22 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDto updateTask(TaskCreateDto taskDto, Long taskId, String username) {
+    public TaskDto updateTask(TaskCreateDto taskCreateDto, Long taskId, String username) {
         Task task = existTask(taskId);
         authorMatch(username, task.getAuthor().getId());
-        if (taskDto.getStatus() != null) {
-            validateStatus(taskDto);
-            task.setStatus(Status.valueOf(taskDto.getStatus()));
+        if (taskCreateDto.getStatus() != null) {
+            validateStatus(taskCreateDto);
+            task.setStatus(Status.valueOf(taskCreateDto.getStatus()));
         }
-        if (taskDto.getPriority() != null) {
-            validatePriority(taskDto);
-            task.setPriority(Priority.valueOf(taskDto.getPriority()));
+        if (taskCreateDto.getPriority() != null) {
+            validatePriority(taskCreateDto);
+            task.setPriority(Priority.valueOf(taskCreateDto.getPriority()));
         }
-        if (taskDto.getHeader() != null) {
-            task.setHeader(taskDto.getHeader());
+        if (taskCreateDto.getHeader() != null) {
+            task.setHeader(taskCreateDto.getHeader());
         }
-        if (taskDto.getDescription() != null) {
-            task.setDescription(taskDto.getDescription());
+        if (taskCreateDto.getDescription() != null) {
+            task.setDescription(taskCreateDto.getDescription());
         }
         taskRepository.save(task);
 
@@ -75,7 +75,8 @@ public class TaskServiceImpl implements TaskService {
         Task task = existTask(taskId);
         authorMatch(username, task.getAuthor().getId());
         User user = existUserById(taskUpdateExecutor.getExecutorId());
-        if (task.getExecutor().equals(user)) {
+        User executor = task.getExecutor();
+        if (!Objects.isNull(executor) && user.equals(executor)) {
             throw new ConflictException("Данный пользователь уже стоит как испольнитель задачи!");
         }
         task.setExecutor(user);
@@ -107,6 +108,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public String deleteTaskById(Long taskId) {
+        Task task = existTask(taskId);
+        for (Comment comment : task.getComments()) {
+            commentService.deleteComment(comment);
+        }
         taskRepository.deleteById(taskId);
         return "Success";
     }
@@ -120,7 +125,7 @@ public class TaskServiceImpl implements TaskService {
 
     public List<TaskDto> viewUserTasks(String username) {
         Long userId = existUserByUsername(username).getId();
-        List<Task> tasks = taskRepository.findByUserId(userId);
+        List<Task> tasks = taskRepository.findByAuthorId(userId);
 
         return tasks.stream()
                 .map(TaskMapper::toTaskDto)
@@ -129,7 +134,7 @@ public class TaskServiceImpl implements TaskService {
 
     public List<TaskDto> viewTasksByUserId(Long userId) {
         existUserById(userId);
-        List<Task> tasks = taskRepository.findByUserId(userId);
+        List<Task> tasks = taskRepository.findByAuthorId(userId);
 
         return tasks.stream()
                 .map(TaskMapper::toTaskDto)

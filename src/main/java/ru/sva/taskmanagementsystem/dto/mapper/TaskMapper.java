@@ -13,8 +13,8 @@ public class TaskMapper {
                 .description(task.getDescription())
                 .status(task.getStatus())
                 .priority(task.getPriority())
-                .author(task.getAuthor())
-                .executor(task.getExecutor())
+                .author(UserMapper.toUserDto(task.getAuthor()))
+                .executor(UserMapper.toUserDto(task.getExecutor()))
                 .comments(task.getComments())
                 .build();
         return taskDto;

@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.sva.taskmanagementsystem.dto.RegistrationUserDto;
 import ru.sva.taskmanagementsystem.dto.UserDto;
+import ru.sva.taskmanagementsystem.dto.mapper.UserMapper;
 import ru.sva.taskmanagementsystem.exception.ValidationException;
 import ru.sva.taskmanagementsystem.model.User;
 import ru.sva.taskmanagementsystem.repository.UserRepository;
@@ -51,5 +52,12 @@ public class UserServiceImpl implements UserService {
                 user.getUsername(),
                 user.getEmail()
         );
+    }
+
+    @Override
+    public UserDto getInfo(String username) {
+        User user = userRepository.findByUsername(username).get();
+
+        return UserMapper.toUserDto(user);
     }
 }

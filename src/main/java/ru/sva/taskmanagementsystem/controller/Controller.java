@@ -3,25 +3,19 @@ package ru.sva.taskmanagementsystem.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.sva.taskmanagementsystem.dto.UserDto;
+import ru.sva.taskmanagementsystem.service.UserServiceImpl;
 
 import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
 public class Controller {
+    private final UserServiceImpl userService;
+
     @GetMapping("/")
     public String homePage() {
         return "Welcome to the home page!";
-    }
-
-    @GetMapping("/unsecured")
-    public String unsecuredData() {
-        return "Unsecured data";
-    }
-
-    @GetMapping("/secured")
-    public String securedData() {
-        return "Secured data";
     }
 
     @GetMapping("/admin")
@@ -30,7 +24,7 @@ public class Controller {
     }
 
     @GetMapping("/info")
-    public String userData(Principal principal) {
-        return principal.getName();
+    public UserDto userData(Principal principal) {
+        return userService.getInfo(principal.getName());
     }
 }

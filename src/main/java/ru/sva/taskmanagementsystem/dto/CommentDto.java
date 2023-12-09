@@ -7,8 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class UserDto {
-    private Long id;
-    private String username;
-    private String email;
+public class CommentDto {
+    private String text;
+    private UserDto author;
 }

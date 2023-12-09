@@ -6,7 +6,6 @@ import lombok.Data;
 import ru.sva.taskmanagementsystem.model.Comment;
 import ru.sva.taskmanagementsystem.model.Priority;
 import ru.sva.taskmanagementsystem.model.Status;
-import ru.sva.taskmanagementsystem.model.User;
 
 import java.util.Collection;
 
@@ -19,7 +18,7 @@ public class TaskDto {
     private String description;
     private Status status;
     private Priority priority;
-    private User author;
-    private User executor;
+    private UserDto author;
+    private UserDto executor;
     private Collection<Comment> comments;
 }

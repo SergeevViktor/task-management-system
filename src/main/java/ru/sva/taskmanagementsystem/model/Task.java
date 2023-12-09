@@ -3,6 +3,7 @@ package ru.sva.taskmanagementsystem.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -10,6 +11,7 @@ import java.util.Collection;
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tasks")
 public class Task {
