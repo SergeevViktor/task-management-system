@@ -1,4 +1,4 @@
-package ru.sva.taskmanagementsystem.dto;
+package ru.sva.taskmanagementsystem.dto.task;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

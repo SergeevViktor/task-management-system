@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
 @Data
@@ -42,9 +41,4 @@ public class Task {
     @JoinColumn(name = "executor_id")
     private User executor;
 
-    @OneToMany
-    @JoinTable(name = "comments",
-            joinColumns = @JoinColumn(name = "comment_id")
-    )
-    private Collection<Comment> comments;
 }

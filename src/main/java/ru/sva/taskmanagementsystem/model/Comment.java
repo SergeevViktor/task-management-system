@@ -3,12 +3,14 @@ package ru.sva.taskmanagementsystem.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "comments")
 public class Comment {
@@ -26,5 +28,5 @@ public class Comment {
 
     @OneToOne
     @JoinColumn(name = "task_id")
-    private Task taskToComment;
+    private Task task;
 }

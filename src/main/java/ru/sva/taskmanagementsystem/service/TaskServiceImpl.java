@@ -3,8 +3,8 @@ package ru.sva.taskmanagementsystem.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import ru.sva.taskmanagementsystem.dto.*;
 import ru.sva.taskmanagementsystem.dto.mapper.TaskMapper;
+import ru.sva.taskmanagementsystem.dto.task.*;
 import ru.sva.taskmanagementsystem.exception.ConflictException;
 import ru.sva.taskmanagementsystem.exception.ForbiddenException;
 import ru.sva.taskmanagementsystem.exception.NotFoundException;
@@ -41,7 +41,6 @@ public class TaskServiceImpl implements TaskService {
                 .priority(Priority.valueOf(taskDto.getPriority()))
                 .author(user)
                 .executor(null)
-                .comments(null)
                 .build();
         taskRepository.save(task);
 
@@ -109,8 +108,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public String deleteTaskById(Long taskId) {
-        Task task = existTask(taskId);
-        for (Comment comment : task.getComments()) {
+        existTask(taskId);
+        for (Comment comment : commentService.findByTaskId(taskId)) {
             commentService.deleteComment(comment);
         }
         taskRepository.deleteById(taskId);
@@ -124,25 +123,25 @@ public class TaskServiceImpl implements TaskService {
         return TaskMapper.toTaskDto(task);
     }
 
-    public List<TaskDto> viewUserTasks(String username, Integer from, Integer size) {
+    public List<TaskDtoWithComments> viewUserTasks(String username, Integer from, Integer size) {
         int offset = from > 0 ? from / size : 0;
         PageRequest page = PageRequest.of(offset, size);
         Long userId = existUserByUsername(username).getId();
         List<Task> tasks = taskRepository.findByAuthorId(userId, page);
 
         return tasks.stream()
-                .map(TaskMapper::toTaskDto)
+                .map(task -> TaskMapper.toTaskDtoComments(task, commentService.findByTaskId(task.getId())))
                 .collect(Collectors.toList());
     }
 
-    public List<TaskDto> viewTasksByUserId(Long userId, Integer from, Integer size) {
+    public List<TaskDtoWithComments> viewTasksByUserId(Long userId, Integer from, Integer size) {
         int offset = from > 0 ? from / size : 0;
         PageRequest page = PageRequest.of(offset, size);
         existUserById(userId);
         List<Task> tasks = taskRepository.findByAuthorId(userId, page);
 
         return tasks.stream()
-                .map(TaskMapper::toTaskDto)
+                .map(task -> TaskMapper.toTaskDtoComments(task, commentService.findByTaskId(task.getId())))
                 .collect(Collectors.toList());
     }
 

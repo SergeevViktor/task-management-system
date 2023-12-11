@@ -2,8 +2,8 @@ package ru.sva.taskmanagementsystem.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sva.taskmanagementsystem.dto.CommentCreateDto;
-import ru.sva.taskmanagementsystem.dto.CommentDto;
+import ru.sva.taskmanagementsystem.dto.comment.CommentCreateDto;
+import ru.sva.taskmanagementsystem.dto.comment.CommentDto;
 import ru.sva.taskmanagementsystem.dto.mapper.CommentMapper;
 import ru.sva.taskmanagementsystem.exception.NotFoundException;
 import ru.sva.taskmanagementsystem.exception.ValidationException;
@@ -13,6 +13,7 @@ import ru.sva.taskmanagementsystem.model.User;
 import ru.sva.taskmanagementsystem.repository.CommentRepository;
 import ru.sva.taskmanagementsystem.repository.TaskRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,11 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final UserServiceImpl userService;
     private final TaskRepository taskRepository;
+
+    @Override
+    public List<Comment> findByTaskId(Long taskId) {
+        return commentRepository.findByTaskId(taskId);
+    }
 
     @Override
     public CommentDto createComment(Long taskId, CommentCreateDto commentCreateDto, String username) {
@@ -36,7 +42,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = Comment.builder()
                 .author(user)
                 .text(commentCreateDto.getText())
-                .taskToComment(task)
+                .task(task)
                 .build();
         commentRepository.save(comment);
 

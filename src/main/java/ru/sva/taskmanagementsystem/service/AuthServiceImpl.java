@@ -6,8 +6,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import ru.sva.taskmanagementsystem.dto.JwtRequest;
-import ru.sva.taskmanagementsystem.dto.JwtResponse;
+import ru.sva.taskmanagementsystem.dto.jwt.JwtRequest;
+import ru.sva.taskmanagementsystem.dto.jwt.JwtResponse;
 import ru.sva.taskmanagementsystem.exception.AppError;
 import ru.sva.taskmanagementsystem.util.JwtTokenUtils;
 

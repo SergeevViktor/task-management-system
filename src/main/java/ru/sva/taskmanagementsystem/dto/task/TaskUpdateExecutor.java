@@ -1,6 +1,5 @@
-package ru.sva.taskmanagementsystem.dto;
+package ru.sva.taskmanagementsystem.dto.task;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

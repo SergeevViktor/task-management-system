@@ -1,7 +1,7 @@
 package ru.sva.taskmanagementsystem.service;
 
-import ru.sva.taskmanagementsystem.dto.RegistrationUserDto;
-import ru.sva.taskmanagementsystem.dto.UserDto;
+import ru.sva.taskmanagementsystem.dto.user.RegistrationUserDto;
+import ru.sva.taskmanagementsystem.dto.user.UserDto;
 import ru.sva.taskmanagementsystem.model.User;
 
 import java.util.Optional;

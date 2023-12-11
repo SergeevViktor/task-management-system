@@ -3,7 +3,7 @@ package ru.sva.taskmanagementsystem.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.sva.taskmanagementsystem.dto.*;
+import ru.sva.taskmanagementsystem.dto.task.*;
 import ru.sva.taskmanagementsystem.service.TaskServiceImpl;
 
 import javax.validation.constraints.PositiveOrZero;
@@ -63,7 +63,7 @@ public class TaskController {
     }
 
     @GetMapping("/view-user-tasks")
-    public ResponseEntity<List<TaskDto>> viewUserTasks(Principal principal,
+    public ResponseEntity<List<TaskDtoWithComments>> viewUserTasks(Principal principal,
                                                        @RequestParam(required = false, defaultValue = "0")
                                                        @PositiveOrZero Integer from,
                                                        @RequestParam(required = false, defaultValue = "10")
@@ -72,7 +72,7 @@ public class TaskController {
     }
 
     @GetMapping("/view-user-tasks/{userId}")
-    public ResponseEntity<List<TaskDto>> viewTasksByUserId(@PathVariable Long userId,
+    public ResponseEntity<List<TaskDtoWithComments>> viewTasksByUserId(@PathVariable Long userId,
                                                            @RequestParam(required = false, defaultValue = "0")
                                                            @PositiveOrZero Integer from,
                                                            @RequestParam(required = false, defaultValue = "10")

@@ -1,9 +1,10 @@
-package ru.sva.taskmanagementsystem.dto;
+package ru.sva.taskmanagementsystem.dto.task;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import ru.sva.taskmanagementsystem.model.Comment;
+import ru.sva.taskmanagementsystem.dto.comment.CommentDto;
+import ru.sva.taskmanagementsystem.dto.user.UserDto;
 import ru.sva.taskmanagementsystem.model.Priority;
 import ru.sva.taskmanagementsystem.model.Status;
 
@@ -12,7 +13,7 @@ import java.util.Collection;
 @Data
 @Builder
 @AllArgsConstructor
-public class TaskDto {
+public class TaskDtoWithComments {
     private Long id;
     private String header;
     private String description;
@@ -20,5 +21,5 @@ public class TaskDto {
     private Priority priority;
     private UserDto author;
     private UserDto executor;
-    private Collection<Comment> comments;
+    private Collection<CommentDto> comments;
 }

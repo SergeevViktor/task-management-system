@@ -3,7 +3,7 @@ package ru.sva.taskmanagementsystem.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.sva.taskmanagementsystem.dto.UserDto;
+import ru.sva.taskmanagementsystem.dto.user.UserDto;
 import ru.sva.taskmanagementsystem.service.UserServiceImpl;
 
 import java.security.Principal;

@@ -1,4 +1,4 @@
-package ru.sva.taskmanagementsystem.dto;
+package ru.sva.taskmanagementsystem.dto.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

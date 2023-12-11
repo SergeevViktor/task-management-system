@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.sva.taskmanagementsystem.dto.JwtRequest;
-import ru.sva.taskmanagementsystem.dto.RegistrationUserDto;
+import ru.sva.taskmanagementsystem.dto.jwt.JwtRequest;
+import ru.sva.taskmanagementsystem.dto.user.RegistrationUserDto;
 import ru.sva.taskmanagementsystem.service.AuthServiceImpl;
 import ru.sva.taskmanagementsystem.service.UserServiceImpl;
 

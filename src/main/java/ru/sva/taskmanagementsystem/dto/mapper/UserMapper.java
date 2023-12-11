@@ -1,7 +1,7 @@
 package ru.sva.taskmanagementsystem.dto.mapper;
 
 import lombok.experimental.UtilityClass;
-import ru.sva.taskmanagementsystem.dto.UserDto;
+import ru.sva.taskmanagementsystem.dto.user.UserDto;
 import ru.sva.taskmanagementsystem.model.User;
 
 @UtilityClass

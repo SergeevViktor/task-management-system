@@ -3,8 +3,8 @@ package ru.sva.taskmanagementsystem.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.sva.taskmanagementsystem.dto.CommentCreateDto;
-import ru.sva.taskmanagementsystem.dto.CommentDto;
+import ru.sva.taskmanagementsystem.dto.comment.CommentCreateDto;
+import ru.sva.taskmanagementsystem.dto.comment.CommentDto;
 import ru.sva.taskmanagementsystem.service.CommentServiceImpl;
 
 import java.security.Principal;

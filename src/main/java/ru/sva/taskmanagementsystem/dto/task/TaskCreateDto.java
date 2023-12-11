@@ -1,4 +1,4 @@
-package ru.sva.taskmanagementsystem.dto;
+package ru.sva.taskmanagementsystem.dto.task;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,5 +10,4 @@ public class TaskCreateDto {
     private String description;
     private String status;
     private String priority;
-    //private Long executor;
 }
