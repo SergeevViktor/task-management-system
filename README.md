@@ -3,7 +3,7 @@
 ### **_Инструкция по развертыванию проекта:_**
 1. [x] скачать данный репозиторий
 2. [x] mvn clean package
-3. [x] mvn install package -DskipTests=true
+3. [x] mvn install 
 4. [x] docker-compose build
 5. [x] docker-compose up -d
 6. [x] сервис: http://localhost:8080
