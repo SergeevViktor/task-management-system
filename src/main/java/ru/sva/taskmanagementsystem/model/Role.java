@@ -1,11 +1,13 @@
 package ru.sva.taskmanagementsystem.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@AllArgsConstructor
 @Table(name = "roles")
 public class Role {
     @Id
