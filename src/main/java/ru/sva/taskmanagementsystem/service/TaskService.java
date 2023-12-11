@@ -24,7 +24,7 @@ public interface TaskService {
 
     TaskDto taskView(Long taskId);
 
-    List<TaskDto> viewUserTasks(String username);
+    List<TaskDto> viewUserTasks(String username, Integer from, Integer size);
 
-    List<TaskDto> viewTasksByUserId(Long userId);
+    List<TaskDto> viewTasksByUserId(Long userId, Integer from, Integer size);
 }

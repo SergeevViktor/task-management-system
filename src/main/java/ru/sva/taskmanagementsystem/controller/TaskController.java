@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.sva.taskmanagementsystem.dto.*;
 import ru.sva.taskmanagementsystem.service.TaskServiceImpl;
 
+import javax.validation.constraints.PositiveOrZero;
 import java.net.URI;
 import java.security.Principal;
 import java.util.List;
@@ -62,12 +63,20 @@ public class TaskController {
     }
 
     @GetMapping("/view-user-tasks")
-    public ResponseEntity<List<TaskDto>> viewUserTasks(Principal principal) {
-        return ResponseEntity.ok().body(taskService.viewUserTasks(principal.getName()));
+    public ResponseEntity<List<TaskDto>> viewUserTasks(Principal principal,
+                                                       @RequestParam(required = false, defaultValue = "0")
+                                                       @PositiveOrZero Integer from,
+                                                       @RequestParam(required = false, defaultValue = "10")
+                                                       @PositiveOrZero Integer size) {
+        return ResponseEntity.ok().body(taskService.viewUserTasks(principal.getName(), from, size));
     }
 
     @GetMapping("/view-user-tasks/{userId}")
-    public ResponseEntity<List<TaskDto>> viewTasksByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok().body(taskService.viewTasksByUserId(userId));
+    public ResponseEntity<List<TaskDto>> viewTasksByUserId(@PathVariable Long userId,
+                                                           @RequestParam(required = false, defaultValue = "0")
+                                                           @PositiveOrZero Integer from,
+                                                           @RequestParam(required = false, defaultValue = "10")
+                                                           @PositiveOrZero Integer size) {
+        return ResponseEntity.ok().body(taskService.viewTasksByUserId(userId, from, size));
     }
 }

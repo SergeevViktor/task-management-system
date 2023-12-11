@@ -1,6 +1,7 @@
 package ru.sva.taskmanagementsystem.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.sva.taskmanagementsystem.dto.*;
 import ru.sva.taskmanagementsystem.dto.mapper.TaskMapper;
@@ -123,18 +124,22 @@ public class TaskServiceImpl implements TaskService {
         return TaskMapper.toTaskDto(task);
     }
 
-    public List<TaskDto> viewUserTasks(String username) {
+    public List<TaskDto> viewUserTasks(String username, Integer from, Integer size) {
+        int offset = from > 0 ? from / size : 0;
+        PageRequest page = PageRequest.of(offset, size);
         Long userId = existUserByUsername(username).getId();
-        List<Task> tasks = taskRepository.findByAuthorId(userId);
+        List<Task> tasks = taskRepository.findByAuthorId(userId, page);
 
         return tasks.stream()
                 .map(TaskMapper::toTaskDto)
                 .collect(Collectors.toList());
     }
 
-    public List<TaskDto> viewTasksByUserId(Long userId) {
+    public List<TaskDto> viewTasksByUserId(Long userId, Integer from, Integer size) {
+        int offset = from > 0 ? from / size : 0;
+        PageRequest page = PageRequest.of(offset, size);
         existUserById(userId);
-        List<Task> tasks = taskRepository.findByAuthorId(userId);
+        List<Task> tasks = taskRepository.findByAuthorId(userId, page);
 
         return tasks.stream()
                 .map(TaskMapper::toTaskDto)
